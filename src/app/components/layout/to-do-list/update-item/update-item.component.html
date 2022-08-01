@@ -1,0 +1,18 @@
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
+  <h2 class="text-center">Update item</h2>
+
+  <div class="mb-3">
+    <label for="description">Description</label>
+    <textarea placeholder="Enter description" class="form-control mt-2" id="description"
+              formControlName="details" rows="5"></textarea>
+    <span class="text-danger mt-2" *ngIf="form.controls.details.touched && form.controls.details.invalid">
+          <small>Description is required!</small>
+    </span>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-sm btn-danger m-1" type="button" (click)="dialogRef.close()">Close</button>
+    <button class="btn btn-sm btn-dark m-1" type="submit">Update</button>
+  </div>
+
+</form>

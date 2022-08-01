@@ -1,0 +1,35 @@
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
+  <h2 class="text-center">{{form.controls.id.value ? 'Update' : 'Create'}} new list</h2>
+  <div class="mb-3">
+    <label for="title">Title</label>
+    <input type="text" placeholder="Enter title" class="form-control mt-2" id="title"
+           formControlName="title"/>
+    <span class="text-danger mt-2" *ngIf="form.controls.title.touched && form.controls.title.invalid">
+          <small>Title is required!</small>
+    </span>
+  </div>
+
+  <div class="mb-3">
+    <label for="due_date">Due date</label>
+    <input type="datetime-local" placeholder="Enter due date" class="form-control mt-2" id="due_date"
+           formControlName="due_date"/>
+    <span class="text-danger mt-2" *ngIf="form.controls.due_date.touched && form.controls.due_date.invalid">
+          <small>Due date is required!</small>
+    </span>
+  </div>
+
+  <div class="mb-3">
+    <label for="description">Description</label>
+    <textarea placeholder="Enter description" class="form-control mt-2" id="description"
+              formControlName="description" rows="5"></textarea>
+    <span class="text-danger mt-2" *ngIf="form.controls.description.touched && form.controls.description.invalid">
+          <small>Description is required!</small>
+    </span>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-sm btn-danger m-1" type="button" (click)="dialogRef.close()">Close</button>
+    <button class="btn btn-sm btn-dark m-1" type="submit">{{form.controls.id.value ? 'Update' : 'Create'}}</button>
+  </div>
+
+</form>

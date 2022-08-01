@@ -1,0 +1,91 @@
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="box">
+    <div class="card card-body">
+
+      <div class="text-center">
+        <img src="../../../../assets/logo.png" alt="logo" width="50">
+      </div>
+
+      <h2 class="text-center mb-3">Create an Account</h2>
+      <form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
+
+        <div class="mb-3">
+          <label for="first_name">First Name</label>
+          <input type="first_name" placeholder="Enter first name" class="form-control mt-2" id="first_name"
+                 formControlName="first_name" autocomplete="new-first_name"/>
+          <span class="text-danger mt-2" *ngIf="form.controls.first_name.touched && form.controls.first_name.invalid">
+          <small *ngIf="form.controls.first_name.errors?.['required']">First name is required!</small>
+          <small *ngIf="form.controls.first_name.errors?.['minlength']">First name length should be 3 or more!</small>
+        </span>
+        </div>
+
+        <div class="mb-3">
+          <label for="last_name">First Name</label>
+          <input type="last_name" placeholder="Enter last name" class="form-control mt-2" id="last_name"
+                 formControlName="last_name" autocomplete="new-last_name"/>
+          <span class="text-danger mt-2" *ngIf="form.controls.last_name.touched && form.controls.last_name.invalid">
+          <small *ngIf="form.controls.last_name.errors?.['required']">Last name is required!</small>
+          <small *ngIf="form.controls.last_name.errors?.['minlength']">Last name length should be 3 or more!</small>
+        </span>
+        </div>
+
+        <div class="mb-3">
+          <label for="email">Email Address</label>
+          <input type="email" placeholder="Enter email address" class="form-control mt-2" id="email"
+                 formControlName="email" autocomplete="new-email"/>
+          <span class="text-danger mt-2" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+          <small *ngIf="form.controls.email.errors?.['required']">Email address is required!</small>
+          <small *ngIf="form.controls.email.errors?.['email']">Invalid email address!</small>
+        </span>
+        </div>
+
+        <div class="mb-3">
+          <div formArrayName="phone_numbers">
+            <div *ngFor="let contactNo of form.controls.phone_numbers.controls; let i=index" class="mb-3">
+              <div [formGroupName]="i">
+                <label [id]="'contactNo' + i">Contact Number {{i + 1}}</label>
+                <div class="d-flex">
+                  <input type="text" [id]="'contactNo' + i" [formControl]="contactNo.controls.phone_number"
+                         class="form-control me-1 pt-2">
+                  <button class="btn btn-sm btn-danger ms-1" type="button" (click)="removeContactNo(i)"
+                          [hidden]="form.controls.phone_numbers.controls.length == 1">x
+                  </button>
+                </div>
+
+                <span class="text-danger mt-2"
+                      *ngIf="contactNo.controls.phone_number.touched && contactNo.controls.phone_number.invalid">
+                   <small *ngIf="contactNo.controls.phone_number.errors?.['required']">Contact Number {{i + 1}} is required!</small>
+                   <small
+                     *ngIf="contactNo.controls.phone_number.errors?.['minlength'] || contactNo.controls.phone_number.errors?.['maxlength']">
+                              Contact number {{i + 1}} should be 10 digits!
+                   </small>
+                </span>
+
+              </div>
+            </div>
+          </div>
+          <div class="text-end">
+            <button class="btn btn-sm btn-dark" type="button" (click)="addContactNo()">Add another</button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password">Password</label>
+          <input type="password" placeholder="Enter password" class="form-control mt-2" id="password"
+                 formControlName="password" autocomplete="new-password"/>
+          <span class="text-danger mt-2"
+                *ngIf="form.controls.password.touched && form.controls.password.invalid">
+          <small *ngIf="form.controls.password.errors?.['required']">Password is required!</small>
+          <small *ngIf="form.controls.password.errors?.['minlength']">Password length should be 8 or more!</small>
+        </span>
+        </div>
+        <div class="text-end">
+          <button class="btn btn-dark w-100" type="submit">Register</button>
+        </div>
+      </form>
+      <div class="text-center mt-3">
+        <a routerLink="/sign-in">Login</a>
+      </div>
+    </div>
+  </div>
+</div>

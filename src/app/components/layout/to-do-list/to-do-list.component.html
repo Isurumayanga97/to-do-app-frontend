@@ -1,0 +1,47 @@
+<button class="btn btn-sm btn-dark" (click)="openDialog({data: null, selectedIndex: null})">Create New List</button>
+
+<div class="row mt-4" [hidden]="allList.length == 0">
+  <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let list of allList; let i=index">
+    <div class="card card-body h-100">
+      <h2>{{list.title}}</h2>
+      <p>{{list.description}}</p>
+      <p>{{'Due date : ' + (list.due_date | date:'medium')}}</p>
+      <div class="text-end">
+        <button class="btn btn-sm btn-danger m-1" (click)="removeList(list.id, i)">Delete</button>
+        <button class="btn btn-sm btn-dark m-1" (click)="openDialog({data: list, selectedIndex: i})">Edit</button>
+      </div>
+      <h3>TO-DO items</h3>
+      <div class="text-danger" [hidden]="list.todo_items_sort?.length > 0">No item found</div>
+      <div *ngFor="let item of list.todo_items_sort; let j=index">
+        <div class="m-1 border p-2">
+          <div class="d-flex">
+            <input type="checkbox" [id]="i+j" [checked]="item.complete_time"
+                   (change)="markAsCompleted({$event, item, i})" class="cursor-pointer">
+            <label class="ms-2 cursor-pointer" [ngClass]="{'text-decoration-line-through' : item.complete_time}"
+                   [for]="i+j">{{item.details}}</label>
+          </div>
+          <div class="text-end">
+            <small>{{item.complete_time | date: 'short'}}</small>
+          </div>
+          <div class="text-end mt-1">
+            <a class="text-secondary cursor-pointer me-3" #editBtn (click)="editItem({item, listIndex: i})">Edit</a>
+            <a class="text-danger cursor-pointer" (click)="deleteItem({listIndex: i,itemIndex: j, itemId: item.id})">Delete</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <label for="item">Create new item</label>
+        <input type="text" id="item" class="form-control" placeholder="Enter item here" #itemInput>
+        <div class="text-end mt-3">
+          <button class="btn btn-sm btn-dark" type="button"
+                  (click)="addItem({newItem: itemInput, listId: list.id, listIndex: i})">Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="allList.length > 0" class="mt-4 text-danger">
+  No record found
+</div>

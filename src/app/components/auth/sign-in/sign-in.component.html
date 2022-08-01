@@ -1,0 +1,38 @@
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="box">
+    <div class="card card-body">
+      <div class="text-center">
+        <img src="../../../../assets/logo.png" alt="logo" width="50">
+      </div>
+
+      <h2 class="text-center mb-3">Sign In</h2>
+      <form [formGroup]="form" autocomplete="off" (ngSubmit)="submit()">
+        <div class="mb-3">
+          <label for="email">Email Address</label>
+          <input type="email" placeholder="Enter email address" class="form-control mt-2" id="email"
+                 formControlName="email" autocomplete="new-email"/>
+          <span class="text-danger mt-2" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+          <small *ngIf="form.controls.email.errors?.['required']">Email address is required!</small>
+          <small *ngIf="form.controls.email.errors?.['email']">Invalid email address!</small>
+        </span>
+        </div>
+        <div class="mb-3">
+          <label for="password">Password</label>
+          <input type="password" placeholder="Enter password" class="form-control mt-2" id="password"
+                 formControlName="password" autocomplete="new-password"/>
+          <span class="text-danger mt-2"
+                *ngIf="form.controls.password.touched && form.controls.password.invalid">
+          <small *ngIf="form.controls.password.errors?.['required']">Password address is required!</small>
+          <small *ngIf="form.controls.password.errors?.['minlength']">Password length should be 8 or more!</small>
+        </span>
+        </div>
+        <div class="text-end">
+          <button class="btn btn-dark w-100" type="submit">Sign In</button>
+        </div>
+      </form>
+      <div class="text-center mt-3">
+        <a routerLink="/sign-up">Register</a>
+      </div>
+    </div>
+  </div>
+</div>
